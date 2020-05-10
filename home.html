@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Page Title</title>
+</head>
+<style>
+    html, body {
+        width: 100%;
+        margin: 0;
+        height: 100%;
+        text-align: center;
+        background-color: rgb(234, 174, 166);
+    }
+    h1{
+        color: rgb(155, 77, 65);
+    }
+    form{
+        margin: 0 auto;
+        margin: 2rem;
+    }
+</style>
+<body>
+    <h1>wordcount!</h1>
+    <a href="{%url 'about'%}">about</a>
+    <form action="{%url 'result'%}" method="">
+        <textarea name="fulltext" id="" cols="30" rows="10"></textarea><br>
+        <button type="submit">count</button>
+    </form> 
+</body>
+</html>
