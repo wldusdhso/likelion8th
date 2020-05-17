@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+</head>
+<style>
+    html, body {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    text-align: center;
+    background-color: #eaaea6;
+    }
+    h1{
+        color: rgb(155, 77, 65);
+    }
+    h2{
+    color: white;
+    }
+
+    div{
+        width:80%;
+        border: 5pt groove rgb(91, 130, 112);
+        background-color: rgb(207, 217, 167);
+        margin: 0 auto;
+        padding: 2rem;
+    }
+</style>
+
+
+<body>
+    <h1>결과!</h1>
+
+    <a href="{%url 'wordcount' %}">다시 세기!</a>
+    <h2>당신이 입력한 문자의 갯수는 총 <em>{{total}}</em>입니다!</h2>
+
+    <h2>당신이 입력한 문장</h2>
+    <div>{{text}}</div>
+    <br>
+
+    <h2>단어 카운트</h2>
+    <div>
+        {% for word, count in dictionary %}
+
+        {{word}}:{{count}}
+        <br>
+    
+        {% endfor %}
+    </div>
+
+
+</body>
+</html>
+
