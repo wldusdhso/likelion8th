@@ -11,6 +11,8 @@
 <br>
 {{blog.summary}}
 <br>
+{% if blog.image %}
 <img src="{{blog.image.url}}" width="200" height="200">
+{% endif %}
 </a>
 {% endfor %}
