@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Account page</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input type="submit" value="submit">
+        <input type="reset" value="reset">
+    </form>
+</body>
+</html>

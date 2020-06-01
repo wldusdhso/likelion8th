@@ -2,6 +2,22 @@
 
 <a href="{%url 'new'%}">새 글</a>
 
+
+<div>
+    {% if user.is_authenticated %}
+        <h3>안녕하세요 {{user.username}}({{user.nickname}})님</h3>
+        {{user.birthday}}
+        {{user.gender}}
+        <br>
+        <a href="{% url 'logout'%}">로그아웃</a>
+    {% else %}
+        <a href="{% url 'login'%}">로그인</a>
+        <a href="{% url 'register'%}">회원가입</a>
+    {% endif %}
+    
+</div>
+
+
 {% for blog in blogs %}
 <hr>
 <a href="{% url 'detail' blog.id%}">
@@ -11,8 +27,6 @@
 <br>
 {{blog.summary}}
 <br>
-{% if blog.image %}
 <img src="{{blog.image.url}}" width="200" height="200">
-{% endif %}
 </a>
 {% endfor %}
