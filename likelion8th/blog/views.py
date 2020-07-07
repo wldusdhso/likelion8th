@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Blog
+from .models import Blog, Comment
 from django.utils import timezone
 from .form import BlogForm
 
@@ -10,7 +10,39 @@ def list(request):
 
 def detail(request, blog_id):
     blog = get_object_or_404(Blog, pk = blog_id)
-    return render(request, 'detail.html', {'blog':blog})
+    comments = Comment.objects.filter(blog=blog)
+    like_num = len(blog.like.all())
+    liker = (blog.like.all()[0] if like_num>0 else '')
+    islike = (True if request.user in blog.like.all() else False)
+    return render(request, 'detail.html', {
+        'blog':blog, 
+        'comments':comments,
+        'liker':liker, 
+        'likes':like_num,
+        'islike': islike})
+
+def commenting(request, blog_id):
+    new_comment = Comment()
+    new_comment.blog = get_object_or_404(Blog, pk=blog_id)
+    new_comment.author = request.user
+    new_comment.body = request.POST.get('body')
+    new_comment.save()
+    return redirect('/blog/'+str(blog_id))
+
+  
+def comment_delete(request, blog_id, comment_id):
+    delete_comment = get_object_or_404(Comment, pk=comment_id)
+    delete_comment.delete()
+    return redirect('/blog/'+str(blog_id))
+
+def like(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    if request.user in blog.like.all():
+        blog.like.set(blog.like.exclude(username=request.user))
+    else : 
+        blog.like.add(request.user)
+    blog.save()
+    return redirect('/blog/'+str(blog_id))
 
 def new(request):
     if request.method =='POST':

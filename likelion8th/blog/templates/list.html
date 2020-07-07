@@ -1,32 +1,40 @@
-<h1>Blog Project</h1>
+{% extends "base.html" %}
+ 
+{% block content %}
 
-<a href="{%url 'new'%}">새 글</a>
 
+<div class="container">
 
-<div>
     {% if user.is_authenticated %}
-        <h3>안녕하세요 {{user.username}}({{user.nickname}})님</h3>
-        {{user.birthday}}
-        {{user.gender}}
-        <br>
-        <a href="{% url 'logout'%}">로그아웃</a>
-    {% else %}
-        <a href="{% url 'login'%}">로그인</a>
-        <a href="{% url 'register'%}">회원가입</a>
-    {% endif %}
+    <h5>안녕하세요 {{user.username}}({{user.nickname}})님</h5>
+    <a class="btn btn-sm btn-outline-secondary" href="{%url 'new'%}">새 글</a>
+    <p></p>
+    {% endif%}
+
+
+
     
+    
+    {% for blog in blogs %}
+    <div class="card bg-light mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-2">
+                {% if blog.image %}
+                <img class="card-img" src="{{blog.image.url}}">
+                {% else %}
+                <img class="card-img" src="" >
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{blog.title}}</h5>
+                    <p class="card-text">{{blog.summary}}</p>
+                    <p class="card-text"><small class="text-muted">{{blog.pub_date}}</small></p>
+                    <a href="{% url 'detail' blog.id%}" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
-
-
-{% for blog in blogs %}
-<hr>
-<a href="{% url 'detail' blog.id%}">
-{{blog.title}}
-<br>
-{{blog.pub_date}}
-<br>
-{{blog.summary}}
-<br>
-<img src="{{blog.image.url}}" width="200" height="200">
-</a>
-{% endfor %}
+{% endblock content %}

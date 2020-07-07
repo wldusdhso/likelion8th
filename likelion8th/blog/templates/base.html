@@ -3,7 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Account page</title>
+    <title>blog</title>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -13,36 +13,30 @@
     html, body{
         width: 100%;
     }
-    #log{
-        top:0;right:0;bottom:0;left:0;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        display:-webkit-flex;
-        -webkit-align-item:center;
-        -webkit-justify-content:center;
-    }
 </style>
 <body>
-    <div id="log">
-       <form method="POST">
-            {% csrf_token %}
-            <div class="form-group" id="form">
-                {{ form.as_table }}
-                <br>
-                <button type="submit" class="btn btn-sm btn-outline-secondary">SUBMIT</button>
-                <button type="reset" class="btn btn-sm btn-outline-secondary">RESET</button>
-            </div>
-        </form>
-        <script>
-            var c = document.getElementById("form").children;
-            for (var i=0; i<c.length; i++){
-                if(c[i].tagName=='INPUT' || c[i].tagName=='SELECT'){
-                    c[i].className="form-control";
-                }
-            }
+    <div class="container">
+        <header class="blog-header py-3">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+              <div class="col-4 pt-1">
+              </div>
+              <div class="col-4 text-center">
+                <h1><a class="blog-header-logo text-dark" href="{% url 'list' %}">BLOG</a></h1>
+              </div>
+              <div class="col-4 d-flex justify-content-end align-items-center">
+                {% if user.is_authenticated %}
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'logout'%}">Logout</a>
+                {% else %}
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'register'%}">Sign up</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'login'%}">Login</a>
+                {% endif %}
 
-        </script>
-    </div>
+            </div>
+          </header>
+          <hr>
+    {% block content %}
+    {% endblock content %}
+    
+</div>
 </body>
 </html>

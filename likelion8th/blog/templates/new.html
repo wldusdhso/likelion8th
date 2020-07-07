@@ -1,10 +1,24 @@
+{% extends "base.html" %}
+ 
+{% block content %}
+
 {% load static %}
-<h1>새 글 작성하기</h1>
-<img src="{% static 'lux.jpg'%}" alt="" width="500" height="300">
 <form method="POST" enctype='multipart/form-data'>
     {%csrf_token%}
-    <table>
+    <div id="form" class="form-group">
         {{form.as_table}}
-    </table>
-    <input class="btn btn-dark" type="submit" value="저장">    
+    </div>    
+    <br>
+    <button class="btn btn-sm btn-outline-secondary" type="submit">SUBMIT</button>
 </form>
+
+<script>
+    var c = document.getElementById("form").children;
+    for (var i=0; i<c.length; i++){
+        if(c[i].tagName=='INPUT' || c[i].tagName=='SELECT' || c[i].tagName=='TEXTAREA'){
+            c[i].className="form-control";
+        }
+    }
+
+</script>
+{% endblock content %}
